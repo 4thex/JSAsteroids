@@ -14,13 +14,15 @@
         ctx.translate(canvas.width/2, canvas.height/2);
         ship = new Ship(ctx);
         /*
-            TODO: Move the ship to x=0, y=0 
+            TODO: Move the ship to x=0, y=0
+            FIX: Set the position.x, and position.y properties to 0
         */
         ship.position.x = 0;
         ship.position.y = 0;
         
         /*
             TODO: Point the spacehip to the right
+            FIX: Set the direction to 90 degrees
         */
         ship.direction = 90;
         
@@ -38,10 +40,12 @@
         var animate = function() {
             /*
                 TODO: Change the ships position here, so that flies to the right.
+                FIX: Increased the ships position.x value
             */
             ship.position.x++;
             /*
                 TODO: Make it start over from the left side, once it exits the canvas.
+                FIX: If the ships position.x value is more than half the width of the canvas, set it to negative half width of the canvas.
             */
             if(ship.position.x > canvas.width/2) {
                 ship.position.x = -canvas.width/2
@@ -72,7 +76,9 @@
          ctx.lineTo(-10, 20);
          /*
             TODO: Finish drawing the spaceship
+            FIX: Make a line across on the bottom.
          */
+         ctx.lineTo(10, 20);
          ctx.closePath();
          ctx.stroke();
          ctx.restore();
