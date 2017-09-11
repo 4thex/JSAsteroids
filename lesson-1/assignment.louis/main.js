@@ -21,7 +21,7 @@
         */
         var loop = function() {
             ctx.save();
-            ctx.clearRect(-canvas.width/2, -canvas.height, canvas.width, canvas.height);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             ship.render();
             ctx.restore();
             window.requestAnimationFrame(loop);
