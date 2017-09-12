@@ -1,13 +1,20 @@
 var asteroids = asteroids || {};
 window.addEventListener("load", function(event) {
+   Number.prototype.toRad = function() {
+      return this * Math.PI / 180; 
+   };
+   Number.prototype.toDeg = function() {
+      return this / 2* Math.PI;
+   };
+   
    asteroids.canvas = new asteroids.Canvas();
    window.addEventListener("keydown", function(event) {
        if(event.repeat) return;
        asteroids.canvas.keys[event.key] = true;
-       console.log("Down: " +event.key);
+      //  console.log("Down: " +event.key);
    });
    window.addEventListener("keyup", function(event) {
        asteroids.canvas.keys[event.key] = false;
-       console.log("Up: "+event.key);
+      //  console.log("Up: "+event.key);
    });
 });

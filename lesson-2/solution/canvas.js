@@ -11,8 +11,11 @@ asteroids.Canvas = function() {
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
     ctx.lineWidth = 3;
-    ctx.translate(canvas.width/2, canvas.height/2);
+    // ctx.translate(canvas.width/2, canvas.height/2);
+    ctx.transform(1, 0, 0, -1, canvas.width/2, canvas.height/2);
     ship = new asteroids.Ship(ctx);
+    ship.direction = 0;
+    ship.speed = 300;
 
     var loop = function() {
         ctx.save();
@@ -25,7 +28,6 @@ asteroids.Canvas = function() {
     
     var lastAnimate = performance.now();
     var animate = function() {
-        // ship.position.x++;
         var timestamp = performance.now();
         controlShip(timestamp - lastAnimate);
         lastAnimate = timestamp;
@@ -33,10 +35,27 @@ asteroids.Canvas = function() {
     window.setInterval(animate, 5);
     
     var controlShip = function(duration) {
-        // Calculate new position based on duration and thrust
+        // Calculate new position based on duration, current speed, and direction
+        var d = ship.speed * duration/1000;
+        var dx = d * Math.cos((ship.direction-90).toRad());
+        var dy = -d * Math.sin((ship.direction-90).toRad());
+        // console.log("duration="+duration+"\nspeed="+ship.speed+"\ndx="+dx+"\ndy="+dy+"\nd="+d+"\ndirection="+ship.direction.toDeg());
+        ship.position.x += dx;
+        ship.position.y += dy;
         
+        // Calculate 
+
         if(ship.position.x > canvas.width/2) {
             ship.position.x = -canvas.width/2
+        }
+        if(ship.position.x < -canvas.width/2) {
+            ship.position.x = canvas.width/2
+        }
+        if(ship.position.y > canvas.height/2) {
+            ship.position.y = -canvas.height/2
+        }
+        if(ship.position.y < -canvas.width/2) {
+            ship.position.y = canvas.width/2
         }
         if(keys["ArrowRight"]) {
             ship.direction++;
