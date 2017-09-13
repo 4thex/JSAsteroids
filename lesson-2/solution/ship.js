@@ -14,12 +14,13 @@ asteroids.Ship = function(ctx) {
            y: 0
         },
         direction: 0,
+        orientation: 0,
         speed: 0,
         render: function() {
          ctx.save();
         //  ctx.scale(10, 10);
          ctx.translate(this.position.x, this.position.y);
-         ctx.rotate(-this.direction.toRad());
+         ctx.rotate(-this.orientation.toRad());
          ctx.beginPath();
          ctx.moveTo(-10, -20);
          ctx.lineTo(0, 20);

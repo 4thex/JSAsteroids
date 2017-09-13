@@ -4,7 +4,7 @@ window.addEventListener("load", function(event) {
       return this * Math.PI / 180; 
    };
    Number.prototype.toDeg = function() {
-      return this / 2* Math.PI;
+      return (180 * this) / Math.PI;
    };
    
    asteroids.canvas = new asteroids.Canvas();
