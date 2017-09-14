@@ -14,8 +14,10 @@ asteroids.Canvas = function() {
     // ctx.translate(canvas.width/2, canvas.height/2);
     ctx.transform(1, 0, 0, -1, canvas.width/2, canvas.height/2);
     ship = new asteroids.Ship(ctx);
-    ship.direction = 45;
-    ship.speed = 50;
+    ship.direction = 0;
+    ship.orientation = 90;
+    ship.speed = 0;
+    ship.speedLimit = 1000;
 
     var loop = function() {
         ctx.save();
@@ -36,38 +38,37 @@ asteroids.Canvas = function() {
     
     var controlShip = function(duration) {
         duration = duration / 1000;
-        // console.log("direction="+ship.direction);
         ship.thrust = keys["ArrowUp"];
         // Calculate new position based on duration, current speed, and direction
         var d = ship.speed * duration;
         var dx = d * Math.cos((ship.direction).toRad());
-        var dy = -d * Math.sin((ship.direction-90).toRad());
-        // console.log("duration="+duration+"\nspeed="+ship.speed+"\ndx="+dx+"\ndy="+dy+"\nd="+d+"\ndirection="+ship.direction.toDeg());
+        var dy = d * Math.sin((ship.direction).toRad());
         ship.position.x += dx;
         ship.position.y += dy;
 
         if(ship.thrust) {
             // Calculate thrust vector
             // Acceleration
-            var acc = 1000; // units/ms^2
+            var acc = 1000;
             // Thrust vector
             var b = (acc * Math.pow(duration, 2)) / 2;
             var bx = b * Math.cos((ship.orientation).toRad());
-            var by = -b * Math.sin((ship.orientation-90).toRad());
-            // console.log("b="+b+", bx="+bx+", by="+by);
-            
+            var by = b * Math.sin((ship.orientation).toRad());
             ship.position.x += bx;
             ship.position.y += by;
             
             // Calculate new direction
             var dir = Math.atan((dy+by)/(dx+bx));
-            // console.log("New direction="+ship.direction);
-            
+
             // Length of resulting vector
             var c = (dx+bx)/(Math.cos(dir));
             
             // Calculate new speed
             ship.speed = c / duration;
+            if(Math.abs(ship.speed)>ship.speedLimit) {
+                ship.speed = Math.sign(ship.speed)*ship.speedLimit;
+            }
+            
             ship.direction = dir.toDeg();
         }        
 
@@ -84,15 +85,19 @@ asteroids.Canvas = function() {
             ship.position.y = canvas.width/2
         }
         if(keys["ArrowRight"]) {
-            ship.orientation++;
+            ship.orientation--;
         }
         if(keys["ArrowLeft"]) {
-            ship.orientation--;
+            ship.orientation++;
         }
         
         ship.orientation %= 360;
         if(ship.orientation<0) {
             ship.orientation = ship.orientation+360;
+        }
+        ship.direction %= 360;
+        if(ship.direction<0) {
+            ship.direction = ship.direction+360;
         }
     };
     
