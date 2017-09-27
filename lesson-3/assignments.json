@@ -1,0 +1,75 @@
+[
+    {
+        "description": [
+                    "<h2>Moving the draw point, and drawing lines</h2>",
+                    "<p>",
+                    "    The <em>CanvasRenderingContext2D</em> interface allows you to draw on the <em>canvas</em> element.",
+                    "    The <em>width</em> and <em>height</em> attributes of the <em>canvas</em> element indicate the range of the <em>x</em> and <em>y</em> value.",
+                    "    The top left corner of the <em>canvas</em> is at x=0, y=0, and the lower right corner is at x=1000, y=1000 in our case,", 
+                    "    because the <em>width</em> is 1000, and the <em>height</em> is also 1000.",
+                    "</p>",
+                    "<p>",
+                    "    You always need to start with a call to the <em>beginPath</em> method, and end with a call to the <em>closePath</em> method.",
+                    "    <code class=\"syntax\">void context.beginPath();",
+                    "    </code>",
+                    "    <code class=\"syntax\">void context.closePath();",
+                    "    </code>",
+                    "</p>",
+                    "<p>",
+                    "    To move the draw point, call the <em>moveTo</em> method.",
+                    "    <code class=\"syntax\">void context.moveTo(x, y);",
+                    "    <br/>x: The horizontal distance to the rigth of the left border of the canvas.",
+                    "    <br/>y: The vertical distance down from the top border of the canvas.",
+                    "    </code>",
+                    "</p>",
+                    "<p>",
+                    "    To make a line from the current draw point to another position, call the <em>lineTo</em> method.",
+                    "    <code class=\"syntax\">void context.lineTo(x, y);",
+                    "    <br/>x: The horizontal distance to the rigth of the left border of the canvas.",
+                    "    <br/>y: The vertical distance down from the top border of the canvas.",
+                    "    </code>",
+                    "</p>",
+                    "<p>",
+                    "    To draw the path that you have defined between <em>beginPath</em> and <em>closePath</em>, call the <em>stroke</em> method.",
+                    "    <code class=\"syntax\">void context.stroke();</code>",
+                    "</p>",
+                    "<h3>Assignment</h3>",
+                    "<p>",
+                    "    Make the canvas on the right marked <em>Assignment</em> look the same as the canvas on the left marked <em>Solution</em>.",
+                    "    Use the <em>moveTo</em> method to move the draw point to x=500, y=500.",
+                    "    Use the <em>lineTo</em> method to draw a line from that point to x=400, y=400.",
+                    "</p>",
+                    "<p>",
+                    "    Write your code in the editor box, and click the <b>Run</b> button to execute it.",
+                    "</p>"
+        ],
+        "solution": [
+            "context.beginPath();",
+            "context.moveTo(500, 500);",
+            "context.lineTo(400, 400);",
+            "context.stroke();",
+            "context.closePath();"
+        ],
+        "template": [
+            "context.beginPath();",
+            "// TODO: Write your code here",
+            "",
+            "//",
+            "context.stroke();",
+            "context.closePath();"
+        ]
+    },
+    {
+        "description": [
+            "<h2>Translate</h2>"
+        ],
+        "solution": [
+            "context.save();",
+            "context.restore();"
+        ],
+        "template": [
+            "context.save();",
+            "context.restore();"
+        ]
+    }
+]

@@ -1,0 +1,93 @@
+* {
+    padding: 0;
+    margin: 0;
+
+    font-family: monospace;    
+}
+body {
+    width: 100%;
+    height: 100%;
+    padding: 1em;
+}
+#page {
+    width: 100em;
+    margin: auto;
+}
+#container {
+    width: 44.4em;
+    float: left;
+}
+#instructions {
+    width: 50em;
+    float: left;
+}
+.example {
+    height: 20.5em;
+    width: 20.5em;
+    float: left;
+    border: solid .1em;
+    margin-left: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.code {
+    border: solid .1em;
+    min-height: 20em;
+    width: 41.2em;
+    clear: left;
+    margin: 1em;
+    padding: .5em;
+    overflow: scroll;
+    background-color: #EEEEEE;
+    white-space: pre;
+    display: inline-block;
+}
+canvas {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    height: 100%;
+}
+#buttons button {
+    font-family: sans-serif;
+    font-size: 20pt;
+    padding: .3em;
+    float: right;
+    margin-right: .5em;
+    cursor: pointer;
+}
+#buttons button:disabled {
+    cursor: default;
+}
+#errors {
+    padding-top: 1em;
+    margin: 1em;
+    clear: both;
+    color: red;
+}
+#success {
+    padding-top: 1em;
+    margin: 1em;
+    clear: both;
+    color: #008000;
+}
+#instructions p {
+    margin-bottom: 1em;
+    font: sans-serif;
+}
+code.syntax {
+    padding-top: .2em;
+    padding-bottom: .2em;
+    padding-left: 2em;
+    margin-top: .3em;
+    margin-bottom: .3em;
+    display: block;
+    background-color: #eeeeff;
+    border-left: solid .3em #0000ff;
+}
+em {
+    color: #0000ff;
+}
+.example h2 {
+    padding: .5em;
+}
