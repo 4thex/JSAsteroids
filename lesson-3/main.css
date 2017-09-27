@@ -22,13 +22,14 @@ body {
     float: left;
 }
 .example {
-    height: 20.5em;
+    height: 25em;
     width: 20.5em;
     float: left;
-    border: solid .1em;
     margin-left: 1em;
-    margin-top: 1em;
     margin-bottom: 1em;
+}
+.header {
+    margin-left: 1em;
 }
 .code {
     border: solid .1em;
@@ -46,7 +47,8 @@ canvas {
     margin-left: auto;
     margin-right: auto;
     display: block;
-    height: 100%;
+    height: 20.5em;
+    border: solid .1em;
 }
 #buttons button {
     font-family: sans-serif;
@@ -80,7 +82,7 @@ code.syntax {
     padding-bottom: .2em;
     padding-left: 2em;
     margin-top: .3em;
-    margin-bottom: .3em;
+    margin-bottom: 1em;
     display: block;
     background-color: #eeeeff;
     border-left: solid .3em #0000ff;
@@ -89,5 +91,11 @@ em {
     color: #0000ff;
 }
 .example h2 {
-    padding: .5em;
+    padding-bottom: .5em;
+}
+#progress {
+    width: 1%;
+    height: .5em;
+    background-color: green;
+    margin-bottom: 1em;
 }

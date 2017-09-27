@@ -5,18 +5,22 @@
         <script type="text/javascript" src="main.js"></script>
     </head>
     <body>
+        <div id="progress"></div>
         <div id="page">
             <div id="instructions">
                 Loading instructions...
             </div>
             <div id="container">
                 <div id="solution-container" class="example">
-                    <h2>Solution</h2>
+                    <h2>Sol<x-secret id="secret-next">u</x-secret>tion</h2>
                     <canvas id="solution" height="1000" width="1000" />
                 </div>
                 <div id="assignment-container" class="example">
                     <h2>Assignment</h2>
                     <canvas id="assignment" height="1000" width="1000" />
+                </div>
+                <div class="header">
+                    <h2>Editor</h2>
                 </div>
                 <div id="editor" class="code" contenteditable="true" spellcheck="false">
                     Loading template...

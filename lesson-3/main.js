@@ -6,10 +6,14 @@ var tutor;
         tutor.errorContainer = document.getElementById('errors');
         tutor.successContainer = document.getElementById('success');
         tutor.instructionsContainer = document.getElementById('instructions');
+        tutor.progressBar = document.getElementById('progress');
         tutor.assignments = [];
+        tutor.progressStep;
+        tutor.progress = 0;
         fetch('assignments.json').then(function(response) {
            response.json().then(function(data) {
                tutor.assignments = data;
+               tutor.progressStep = 100 / data.length;
                var assignment = tutor.assignments.shift();
                tutor.render(assignment);
            }); 
@@ -22,6 +26,8 @@ var tutor;
             editor.innerHTML = assignment.template.join('\n');
             tutor.renderSolution = new Function("context", assignment.solution.join('\n'));
             tutor.renderSolution(tutor.solutionContext);
+            tutor.progress += tutor.progressStep;
+            tutor.progressBar.style.width = tutor.progress +'%';
         };
 
         window.addEventListener('error', function(event) {
@@ -47,6 +53,7 @@ var tutor;
         });
         
         tutor.nextBtn.addEventListener('click', function(event) {
+            tutor.successContainer.innerHTML = '';
             tutor.nextBtn.disabled = true;
             var assignment = tutor.assignments.shift();
             if(assignment) {
@@ -74,6 +81,12 @@ var tutor;
         var solutionCanvas = document.getElementById('solution');
         tutor.solutionContext = solutionCanvas.getContext('2d');
         tutor.assignmentContext = assignmentCanvas.getContext('2d');
+
+        var secret = document.getElementById('secret-next');
+        secret.addEventListener('click', function(event) {
+            // Secret way to get to next assignment... click on the 'u' in the Solution
+           tutor.nextBtn.dispatchEvent(new Event('click')); 
+        });
     });
 })();
 
