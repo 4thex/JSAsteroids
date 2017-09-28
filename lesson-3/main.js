@@ -39,6 +39,7 @@ var tutor;
         tutor.runBtn = document.getElementById('run-button');
         tutor.nextBtn = document.getElementById('next-button');
         tutor.runBtn.addEventListener('click', function(event) {
+            tutor.runBtn.disabled = true;
             tutor.errorContainer.innerHTML = '';
             tutor.successContainer.innerHTML = '';
             tutor.prepareContext(tutor.assignmentContext, 'Assignment');
@@ -46,6 +47,7 @@ var tutor;
             renderAssignment(tutor.assignmentContext);
             if(!tutor.same(tutor.assignmentContext, tutor.solutionContext)) {
                 tutor.errorContainer.innerHTML = 'That doesn\'t look like the solution';
+                tutor.runBtn.disabled = false;
             } else {
                 tutor.successContainer.innerHTML = 'Yeah! You got it! Click the Next button to go to the next assignment.';
                 tutor.nextBtn.disabled = false;
@@ -53,11 +55,12 @@ var tutor;
         });
         
         tutor.nextBtn.addEventListener('click', function(event) {
-            tutor.successContainer.innerHTML = '';
             tutor.nextBtn.disabled = true;
+            tutor.successContainer.innerHTML = '';
             var assignment = tutor.assignments.shift();
             if(assignment) {
                 tutor.render(assignment);
+                tutor.runBtn.disabled = false;
             } else {
                 tutor.successContainer.innerHTML = 'Your are done! You successfully completed all the assignments';
             }

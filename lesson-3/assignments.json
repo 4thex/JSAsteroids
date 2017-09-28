@@ -1,6 +1,26 @@
 [
     {
         "description": [
+            "<h2>Clear</h2>",
+            "<p>",
+            "",
+            "</p>",
+            "    <code class=\"syntax\">void context.clearRect(x, y, width, height);",
+            "    <br/>x: The horizontal distance to the rigth of the current 0, 0 point of the canvas.",
+            "    <br/>y: The vertical distance down from the current 0, 0 point of the canvas.",
+            "    </code>",
+            "<h3>Assignment</h3>",
+            "<p>",
+            "",
+            "</p>"
+        ],
+        "solution": [
+        ],
+        "template": [
+        ]
+    },
+    {
+        "description": [
             "<h2>Moving the draw point, and drawing lines</h2>",
             "<p>",
             "    The <em>CanvasRenderingContext2D</em> interface allows you to draw on the <em>canvas</em> element.",
@@ -9,10 +29,10 @@
             "    because the <em>width</em> is 1000, and the <em>height</em> is also 1000.",
             "</p>",
             "<p>",
-            "    You always need to start with a call to the <em>beginPath</em> method, and end with a call to the <em>closePath</em> method.",
+            "    You always need to start with a call to the <em>beginPath</em> method, and end with a call to the <em>stroke</em> method.",
             "    <code class=\"syntax\">void context.beginPath();",
             "    </code>",
-            "    <code class=\"syntax\">void context.closePath();",
+            "    <code class=\"syntax\">void context.stroke();",
             "    </code>",
             "</p>",
             "<p>",
@@ -30,8 +50,7 @@
             "    </code>",
             "</p>",
             "<p>",
-            "    To draw the path that you have defined between <em>beginPath</em> and <em>closePath</em>, call the <em>stroke</em> method.",
-            "    <code class=\"syntax\">void context.stroke();</code>",
+            "    To draw the path that you have defined since <em>beginPath</em>, call the <em>stroke</em> method.",
             "</p>",
             "<h3>Assignment</h3>",
             "<p>",
@@ -47,7 +66,6 @@
             "context.beginPath();",
             "context.moveTo(500, 500);",
             "context.lineTo(400, 400);",
-            "context.closePath();",
             "context.stroke();"
         ],
         "template": [
@@ -55,7 +73,6 @@
             "// TODO: Write your code here",
             "",
             "//",
-            "context.closePath();",
             "context.stroke();"
         ]
     },
@@ -89,14 +106,12 @@
             "context.beginPath();",
             "context.moveTo(100, 100);",
             "context.lineTo(500,0);",
-            "context.closePath();",
             "context.stroke();",
             "context.save();",
             "context.translate(500,500);",
             "context.beginPath();",
             "context.moveTo(0, 0);",
             "context.lineTo(500,0);",
-            "context.closePath();",
             "context.stroke();",
             "context.restore();"
         ],
@@ -104,14 +119,12 @@
             "context.beginPath();",
             "context.moveTo(100, 100);",
             "context.lineTo(500,0);",
-            "context.closePath();",
             "context.stroke();",
             "context.save();",
             "// TODO: Add a call to the translate method here",
             "context.beginPath();",
             "context.moveTo(0, 0);",
             "context.lineTo(500,0);",
-            "context.closePath();",
             "context.stroke();",
             "context.restore();"
         ]
@@ -159,7 +172,6 @@
             "context.beginPath();",
             "context.moveTo(0, 0);",
             "context.lineTo(500,0);",
-            "context.closePath();",
             "context.stroke();",
             "context.restore();"
         ],
@@ -175,9 +187,116 @@
             "context.beginPath();",
             "context.moveTo(0, 0);",
             "context.lineTo(500,0);",
-            "context.closePath();",
             "context.stroke();",
             "context.restore();"
+        ]
+    },
+    {
+        "description": [
+            "<h2>Text</h2>",
+            "<p>You can write text in the canvas using the <em>fillText</em> or <em>strokeText</em> method.</p>",
+            "    <code class=\"syntax\">void context.fillText(text, x, y [, maxWidth]);",
+            "    <br/>void context.strokeText(text, x, y [, maxWidth]);",
+            "    <br/>text: The string you want to draw.",
+            "    <br/>x: The horizontal distance to the right of the current 0, 0 point in the canvas.",
+            "    <br/>y: The vertical distance down from the current 0, 0 point in the canvas.",
+            "    <br/>maxWidth: The maximum width of the text",
+            "    </code>",
+            "<p>",
+            "   The text is drawn relative to the current 0, 0 point. Remember, we might have translated the coordinate system.",
+            "</p>",
+            "<p>",
+            "   If <em>maxWidth</em> is specified, the text will be truncated or cut off if the width of the text is bigger than <em>maxWidth</em>.",
+            "   If the optional argument <em>maxWidth</em> is not specified, the text will be drawn in full.",
+            "</p>",
+            "<p>",
+            "   You can change the font (the way the text looks) and the size by setting the <em>font</em> property of the context.",
+            "   The <em>font</em> property must be written just like a CSS font property.",
+            "</p>",
+            "<p>",
+            "   <b>Example:</b>",
+            "</p>",
+            "    <code class=\"syntax\">context.font = \"100px sans-serif\";",
+            "   </code>",
+            "<h3>Assignment</h3>",
+            "<p>",
+            "    Add a call to <em>fillText</em> to draw the text <b>Awesome</b> at x=100, y=400",
+            "</p>",
+            "<p>",
+            "    Write your code in the editor box, and click the <b>Run</b> button to execute it.",
+            "</p>"
+        ],
+        "solution": [
+            "context.save();",
+            "var canvas = context.canvas;",
+            "var width = canvas.width;",
+            "var height = canvas.height;",
+            "context.translate(width/2, height/2);",
+            "context.font = \"100px sans-serif\";",
+            "context.fillText(\"Awesome\", -400, -100);",
+            "context.restore();"
+        ],
+        "template": [
+            "context.save();",
+            "var canvas = context.canvas;",
+            "var width = canvas.width;",
+            "var height = canvas.height;",
+            "context.translate(width/2, height/2);",
+            "context.font = \"100px sans-serif\";",
+            "// TODO Call fillText here",
+            "context.restore();"
+        ]
+    },
+    {
+        "description": [
+            "<h2>Polygon (Greek \"many angles\")</h2>",
+            "<p>",
+            "   Drawing a polygon is almost the same as drawing a single line.",
+            "</p>",
+            "<p>",
+            "   Start with a call to <em>beginPath</em>, then call <em>moveTo</em> to set the starting point of the polygon.",
+            "</p>",
+            "<p>",
+            "   Add a call to <em>lineTo</em> for each side in the polygon.",
+            "</p>",
+            "<p>",
+            "   Finally go from the current draw point back to the beginning of the path with a call to the <em>closePath</em> method.",
+            "</p>",
+            "    <code class=\"syntax\">void context.closePath();",
+            "    </code>",
+            "<p>",
+            "   Draw the polygon with a call to the <em>stroke</em> method.",
+            "</p>",
+            "<h3>Assignment</h3>",
+            "<p>",
+            "   Close the polygon by adding a call to the <em>closePath</em> method.",
+            "</p>"            
+        ],
+        "solution": [
+            "context.beginPath();",
+            "context.moveTo(500, 100);",
+            "context.lineTo(700, 200);",
+            "context.lineTo(600, 300);",
+            "context.lineTo(700, 300);",
+            "context.lineTo(600, 400);",
+            "context.lineTo(500, 500);",
+            "context.lineTo(400, 300);",
+            "context.lineTo(200, 300);",
+            "context.closePath()",
+            "context.stroke();"
+        ],
+        "template": [
+            "context.beginPath();",
+            "context.moveTo(500, 100);",
+            "context.lineTo(700, 200);",
+            "context.lineTo(600, 300);",
+            "context.lineTo(700, 300);",
+            "context.lineTo(600, 400);",
+            "context.lineTo(500, 500);",
+            "context.lineTo(400, 300);",
+            "context.lineTo(200, 300);",
+            "// TODO: Add a call to closePath here to close the polygon.",
+            "context.stroke();"
         ]
     }
 ]
