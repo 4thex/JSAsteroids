@@ -1,26 +1,6 @@
 [
     {
         "description": [
-            "<h2>Clear</h2>",
-            "<p>",
-            "",
-            "</p>",
-            "    <code class=\"syntax\">void context.clearRect(x, y, width, height);",
-            "    <br/>x: The horizontal distance to the rigth of the current 0, 0 point of the canvas.",
-            "    <br/>y: The vertical distance down from the current 0, 0 point of the canvas.",
-            "    </code>",
-            "<h3>Assignment</h3>",
-            "<p>",
-            "",
-            "</p>"
-        ],
-        "solution": [
-        ],
-        "template": [
-        ]
-    },
-    {
-        "description": [
             "<h2>Moving the draw point, and drawing lines</h2>",
             "<p>",
             "    The <em>CanvasRenderingContext2D</em> interface allows you to draw on the <em>canvas</em> element.",
@@ -297,6 +277,98 @@
             "context.lineTo(200, 300);",
             "// TODO: Add a call to closePath here to close the polygon.",
             "context.stroke();"
+        ]
+    },
+    {
+        "description": [
+            "<h2>Clear</h2>",
+            "<p>",
+            "To clear a rectangular area of the canvas, use the <em>clearRect</em> method.",
+            "</p>",
+            "    <code class=\"syntax\">void context.clearRect(x, y, width, height);",
+            "    <br/>x: The horizontal distance to the rigth of the current 0, 0 point of the canvas.",
+            "    <br/>y: The vertical distance down from the current 0, 0 point of the canvas.",
+            "    <br/>width: The width of the rectangle.",
+            "    <br/>height: The height of the rectangle.",
+            "    </code>",
+            "<p>",
+            "   To clear the entire canvas, first find the width and height of the canvas. The <em>context</em> has a <em>canvas</em> property,",
+            "   that refers to the canvas element it was created from.",
+            "</p>",
+            "   <code class=\"syntax\">var canvas = context.canvas;",
+            "   <br/>var width = canvas.width;",
+            "   <br/>var height = canvas.height;",
+            "   </code>",
+            "<p>",
+            "   Now you can clear the canvas like this:",
+            "</p>",
+            "   <code class=\"syntax\">context.clearRect(0, 0, width, height);",
+            "   </code>",
+            "<h3>Assignment</h3>",
+            "<p>",
+            "   Clear the top part of the triangle by clearing the canvas from the top down to y=500",
+            "</p>"
+        ],
+        "solution": [
+            "context.beginPath()",
+            "context.moveTo(500, 100);",
+            "context.lineTo(900, 900);",
+            "context.lineTo(100, 900);",
+            "context.closePath();",
+            "context.stroke();",
+            "context.clearRect(0, 0, 1000, 500);"
+        ],
+        "template": [
+            "context.beginPath()",
+            "context.moveTo(500, 100);",
+            "context.lineTo(900, 900);",
+            "context.lineTo(100, 900);",
+            "context.closePath();",
+            "context.stroke();",
+            "// TODO: Add the call to clearRect here."
+        ]
+    },
+    {
+        "description": [
+            "<h2>Setting line thickness</h2>",
+            "<p>",
+            "   You can set the thickness of a line by setting the <em>lineWidth</em> property of the <em>context</em>.",
+            "</p>",
+            "<code class=\"syntax\">context.lineWidth = value;",
+            "<br/>value: The thickness of the line.",
+            "</code>",
+            "<p>",
+            "   The line is filled out around the coordinates.",
+            "</p>",
+            "<h3>Assignment</h3>",
+            "<p>",
+            "   Set the width of the line to the <em>width</em> variable inside the <em>for</em> loop.",
+            "</p>",
+            "<p>",
+            "   Now use your Cloud 9 page to explore other canvas features. You can find all the information on <a href=\"https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D\">this</a> page.",
+            "</p>"
+        ],
+        "solution": [
+            "context.lineCap = \"round\";",
+            "var width;",
+            "for(width = 1; width < 50; width+=5) {",
+            "  context.lineWidth = width;",
+            "  context.beginPath();",
+            "  context.moveTo(100, width*20);",
+            "  context.lineTo(900, width*20);",
+            "  context.stroke();",
+            "}"
+        ],
+        "template": [
+            "context.lineCap = \"round\";",
+            "var width;",
+            "for(width = 1; width < 50; width+=5) {",
+            "  //TODO: Set the lineWidth to the width variable",
+            "  context.beginPath();",
+            "  context.moveTo(100, width*20);",
+            "  context.lineTo(900, width*20);",
+            "  context.stroke();",
+            "}"
         ]
     }
 ]

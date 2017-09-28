@@ -43,7 +43,7 @@ var tutor;
             tutor.errorContainer.innerHTML = '';
             tutor.successContainer.innerHTML = '';
             tutor.prepareContext(tutor.assignmentContext, 'Assignment');
-            var renderAssignment = new Function('context', editor.innerHTML);
+            var renderAssignment = new Function('context', editor.innerText);
             renderAssignment(tutor.assignmentContext);
             if(!tutor.same(tutor.assignmentContext, tutor.solutionContext)) {
                 tutor.errorContainer.innerHTML = 'That doesn\'t look like the solution';
