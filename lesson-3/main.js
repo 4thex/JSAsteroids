@@ -32,6 +32,7 @@ var tutor;
 
         window.addEventListener('error', function(event) {
            tutor.errorContainer.innerHTML = event.error;
+           tutor.runBtn.disabled = false;
         });
 
         var editor = document.getElementById('editor');
