@@ -8,6 +8,7 @@ asteroids.Ship = function(ctx) {
     }, 50);
     
     return {
+        collided: false,
         thrust: thrust,
         position: {
            x: 0,
@@ -27,6 +28,9 @@ asteroids.Ship = function(ctx) {
         ],
         render: function() {
          ctx.save();
+         if(this.collided) {
+             ctx.strokeStyle = 'red';
+         }
          ctx.translate(this.position.x, this.position.y);
          ctx.rotate((this.orientation-90).toRad());
          ctx.beginPath();

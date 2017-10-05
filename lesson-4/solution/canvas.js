@@ -24,8 +24,10 @@ asteroids.Canvas = function() {
     var loop = function() {
         ctx.save();
         ctx.clearRect(-canvas.width/2, -canvas.height/2, canvas.width, canvas.height);
+        ship.collided = detectCollision(ship, asteroid);
         ship.render();
         asteroid.render();
+        
         ctx.restore();
         window.requestAnimationFrame(loop);
     };
@@ -48,10 +50,37 @@ asteroids.Canvas = function() {
             var segments = [];
             part.forEach(function(point, index, it) {
                 if(index == 0) return;
-                point.forEach(segments.push);
-                it[index-1].forEach(segments.push);
-            }); 
+                var segment = [];
+                point.forEach(function(a) {
+                    segment.push(a);
+                });
+                it[index-1].forEach(function(a) {
+                    segment.push(a);
+                });
+                segments.push(segment);
+            });
+            return segments;
         };
+        var translate = function(segment, position) {
+            return [segment[0]+position.x, segment[1]+position.y, segment[2]+position.x, segment[3]+position.y];
+        };
+        // Check all segments in each part agains all segments of all parts in other object
+        var obj1Segments = obj1.parts.map(convert).reduce(function(a, b) {
+            return a.concat(b);
+        });
+        var obj2Segments = obj2.parts.map(convert).reduce(function(a, b) {
+            return a.concat(b);
+        });
+        var detected = obj1Segments.map(function(s) { 
+                return translate(s, obj1.position);
+            }).some(function(s1) {
+            return obj2Segments.map(function(s) {
+                return translate(s, obj2.position);
+            }).some(function(s2) {
+                return collision.detect([s1, s2]);    
+            });
+        });
+        return detected;
     };
     
     var controlShip = function(duration) {
