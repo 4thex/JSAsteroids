@@ -18,6 +18,8 @@ asteroids.Canvas = function() {
     ship.speed = 0;
     ship.speedLimit = 1000;
 
+    var torpedos = [];
+
     var asteroidsCollection = [];
     
     var asteroid1 = new asteroids.Asteroid(ctx);
@@ -34,22 +36,40 @@ asteroids.Canvas = function() {
     var loop = function() {
         ctx.save();
         ctx.clearRect(-canvas.width/2, -canvas.height/2, canvas.width, canvas.height);
+        // Check if the ship collided with any of the asteroids
         ship.collided = asteroidsCollection.some(function(asteroid) {
-            return detectCollision(ship, asteroid);
+            var collided = detectCollision(ship, asteroid);
+            if(collided) {
+                asteroid.collided = true;
+            }
+            return collided;
         });
         ship.render();
         asteroidsCollection.forEach(function(asteroid) {
             asteroid.render();
         });
         
-        ctx.restore();
+        // Remove expired torpedos
+        torpedos = torpedos.filter(function(torpedo) {
+            return !torpedo.expired;
+        });
         
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(0, 0, 100, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
+        // Render all torpedos
+        torpedos.forEach(function(torpedo) {
+            torpedo.render();
+        });
         
+        // Check if any torpedo collided with any asteroid
+        asteroidsCollection.forEach(function(asteroid) {
+           var collided = torpedos.some(function(torpedo) {
+               return detectCollision(asteroid, torpedo);
+           }); 
+           if(collided) {
+               asteroid.collided = true;
+           }
+        });
+        
+        ctx.restore();
         window.requestAnimationFrame(loop);
     };
     window.requestAnimationFrame(loop);
@@ -57,10 +77,30 @@ asteroids.Canvas = function() {
     var lastAnimate = performance.now();
     var animate = function() {
         var timestamp = performance.now();
-        controlShip(timestamp - lastAnimate);
+        var duration = timestamp - lastAnimate;
+        controlShip(duration);
+        controlTorpedos(duration);
         lastAnimate = timestamp;
     };
-    window.setInterval(animate, 5);
+    window.setInterval(animate, 1);
+    
+    var controlTorpedos = function(duration) {
+        duration = duration / 1000;
+        torpedos.forEach(function(torpedo) {
+            var d = torpedo.speed * duration;
+            var dx = d * Math.cos((torpedo.direction).toRad());
+            var dy = d * Math.sin((torpedo.direction).toRad());
+            torpedo.position.x += dx;
+            torpedo.position.y += dy;
+        });
+        if(!asteroids.Torpedo.halted && keys[" "]) {
+            var torpedo = new asteroids.Torpedo(ctx);
+            torpedo.position.x = ship.position.x;
+            torpedo.position.y = ship.position.y;
+            torpedo.direction = ship.orientation;
+            torpedos.push(torpedo);
+        }
+    };
     
     var collision = new asteroids.Collision();
     var detectCollision = function(obj1, obj2) {

@@ -1,6 +1,6 @@
-var game = game || {};
+var asteroids = asteroids || {};
 QUnit.test( "intersect", function( assert ) {
-  var collision = new game.Collision();
+  var collision = new asteroids.Collision();
   var testCases = [
           [[  0,   0,  10,  10], [  2,  -3,   3,  10]] // 
         , [[ 10,   2,  -2,   2], [ -3,   0,  10,  10]]
@@ -27,11 +27,11 @@ QUnit.test('performance', function(assert) {
       return segment;
     }; 
     console.time("Executions");
-    var collision = new game.Collision();
+    var collision = new asteroids.Collision();
     var intersect = 0;
     var notIntersect = 0;
     var i;
-    for(i = 0; i< 1000; i++) {
+    for(i = 0; i< 5000000; i++) {
         var result = collision.detect([randomSegment(), randomSegment()]);
         if(result) {
             intersect++;
