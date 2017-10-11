@@ -1,0 +1,68 @@
+var asteroids = asteroids || {};
+QUnit.test( "intersect", function( assert ) {
+  var collision = new asteroids.Collision();
+  var testCases = [
+          [[  0,   0,  10,  10], [  2,  -3,   3,  10]] // 
+        , [[ 10,   2,  -2,   2], [ -3,   0,  10,  10]]
+        , [[  0,   0,  10,  -2], [  1,   1,  10,  -3]]
+        , [[ -1,  -1, -10, -10], [  0, -10, -10,  -3]]
+        , [[  1,   1,   1,  10], [  0,   5,  10,   5]]
+        , [[  1,   2,   3,   4], [  3,   2,  -5,   8]]
+        , [[  0, -20,   0,  20], [-20,   0,  20,   0]]
+        , [[  0, -20,   0,  20], [  1,  20,  -1, -20]]
+  ];
+  testCases.forEach(function(testCase) {
+      var result = collision.detect(testCase);
+      assert.ok(result == true, "Passed: "+testCase);
+  });
+});
+
+QUnit.test('performance', function(assert) {
+    var randomSegment = function() {
+      var segment = [];
+      var i;
+      for(i=0; i<4; i++) {
+          segment.push(Math.random() * 100 + -50);
+      }
+      return segment;
+    }; 
+    console.time("Executions");
+    var collision = new asteroids.Collision();
+    var intersect = 0;
+    var notIntersect = 0;
+    var i;
+    for(i = 0; i< 5000000; i++) {
+        var result = collision.detect([randomSegment(), randomSegment()]);
+        if(result) {
+            intersect++;
+        } else {
+            notIntersect++;
+        }
+    }
+    console.timeEnd("Executions");
+    assert.ok(true, "Passed: Intersect="+intersect+", Not Intersect="+notIntersect);    
+});
+
+QUnit.test('Torpedo collision', function(assert) {
+    var collision = new asteroids.Collision();
+    var torpedo = new asteroids.Torpedo({});
+    torpedo.position = {x: 0, y: 0};
+    torpedo.last = {
+        position: {x: 100, y: 100}
+    };
+    var obj1 = {
+        parts: [
+            [
+                [-10, -20], [0, 20], [10, -20]
+            ],
+            [
+                [7, -8], [-7, -8]
+            ]
+        ],
+        position: {x: 0, y: 0}
+    };
+    
+    var detected = collision.detectObjects(obj1, torpedo);    
+    assert.ok(detected == true, "Passed");
+    
+});

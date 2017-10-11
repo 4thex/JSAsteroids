@@ -38,9 +38,12 @@ asteroids.Canvas = function() {
         ctx.clearRect(-canvas.width/2, -canvas.height/2, canvas.width, canvas.height);
         // Check if the ship collided with any of the asteroids
         ship.collided = asteroidsCollection.some(function(asteroid) {
-            var collided = detectCollision(ship, asteroid);
+            var collided = collision.detectObjects(ship, asteroid);
             if(collided) {
                 asteroid.collided = true;
+                window.setTimeout(function() {
+                   asteroid.collided = false;
+               }, 1000);
             }
             return collided;
         });
@@ -62,10 +65,13 @@ asteroids.Canvas = function() {
         // Check if any torpedo collided with any asteroid
         asteroidsCollection.forEach(function(asteroid) {
            var collided = torpedos.some(function(torpedo) {
-               return detectCollision(asteroid, torpedo);
+               return collision.detectObjects(asteroid, torpedo);
            }); 
            if(collided) {
                asteroid.collided = true;
+               window.setTimeout(function() {
+                   asteroid.collided = false;
+               }, 1000);
            }
         });
         
@@ -88,8 +94,8 @@ asteroids.Canvas = function() {
         duration = duration / 1000;
         torpedos.forEach(function(torpedo) {
             var d = torpedo.speed * duration;
-            var dx = d * Math.cos((torpedo.direction).toRad());
-            var dy = d * Math.sin((torpedo.direction).toRad());
+            var dx = d * Math.cos((torpedo.orientation).toRad());
+            var dy = d * Math.sin((torpedo.orientation).toRad());
             torpedo.position.x += dx;
             torpedo.position.y += dy;
         });
@@ -97,52 +103,52 @@ asteroids.Canvas = function() {
             var torpedo = new asteroids.Torpedo(ctx);
             torpedo.position.x = ship.position.x;
             torpedo.position.y = ship.position.y;
-            torpedo.direction = ship.orientation;
+            torpedo.orientation = ship.orientation;
             torpedos.push(torpedo);
         }
     };
     
     var collision = new asteroids.Collision();
-    var detectCollision = function(obj1, obj2) {
-        // Convert into segments
-        var parts1 = obj1.parts;
-        var parts2 = obj2.parts;
-        var convert = function(part) {
-            var segments = [];
-            part.forEach(function(point, index, it) {
-                if(index == 0) return;
-                var segment = [];
-                point.forEach(function(a) {
-                    segment.push(a);
-                });
-                it[index-1].forEach(function(a) {
-                    segment.push(a);
-                });
-                segments.push(segment);
-            });
-            return segments;
-        };
-        var translate = function(segment, position) {
-            return [segment[0]+position.x, segment[1]+position.y, segment[2]+position.x, segment[3]+position.y];
-        };
-        // Check all segments in each part agains all segments of all parts in other object
-        var obj1Segments = obj1.parts.map(convert).reduce(function(a, b) {
-            return a.concat(b);
-        });
-        var obj2Segments = obj2.parts.map(convert).reduce(function(a, b) {
-            return a.concat(b);
-        });
-        var detected = obj1Segments.map(function(s) { 
-                return translate(s, obj1.position);
-            }).some(function(s1) {
-            return obj2Segments.map(function(s) {
-                return translate(s, obj2.position);
-            }).some(function(s2) {
-                return collision.detect([s1, s2]);    
-            });
-        });
-        return detected;
-    };
+    // var detectCollision = function(obj1, obj2) {
+    //     // Convert into segments
+    //     var parts1 = obj1.parts;
+    //     var parts2 = obj2.parts;
+    //     var convert = function(part) {
+    //         var segments = [];
+    //         part.forEach(function(point, index, it) {
+    //             if(index == 0) return;
+    //             var segment = [];
+    //             point.forEach(function(a) {
+    //                 segment.push(a);
+    //             });
+    //             it[index-1].forEach(function(a) {
+    //                 segment.push(a);
+    //             });
+    //             segments.push(segment);
+    //         });
+    //         return segments;
+    //     };
+    //     var translate = function(segment, position) {
+    //         return [segment[0]+position.x, segment[1]+position.y, segment[2]+position.x, segment[3]+position.y];
+    //     };
+    //     // Check all segments in each part agains all segments of all parts in other object
+    //     var obj1Segments = obj1.parts.map(convert).reduce(function(a, b) {
+    //         return a.concat(b);
+    //     });
+    //     var obj2Segments = obj2.parts.map(convert).reduce(function(a, b) {
+    //         return a.concat(b);
+    //     });
+    //     var detected = obj1Segments.map(function(s) { 
+    //             return translate(s, obj1.position);
+    //         }).some(function(s1) {
+    //         return obj2Segments.map(function(s) {
+    //             return translate(s, obj2.position);
+    //         }).some(function(s2) {
+    //             return collision.detect([s1, s2]);    
+    //         });
+    //     });
+    //     return detected;
+    // };
     
     var controlShip = function(duration) {
         duration = duration / 1000;

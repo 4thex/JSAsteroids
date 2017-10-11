@@ -10,40 +10,58 @@ asteroids.Torpedo = function(ctx) {
     }, 200);
     
     this.position = {
+    };
+
+    var currentPosition = {
         x: 0,
         y: 0
     };
     
-    this.direction = 0;
+    var lastPosition = {
+        x: 0,
+        y: 0
+    };
+
+    Object.defineProperty(this.position, 'x', {
+       get: function() {
+           return currentPosition.x;
+       },
+       set: function(value) {
+           currentPosition.x = value;
+       }
+    });
+    
+    Object.defineProperty(this.position, 'y', {
+       get: function() {
+           return currentPosition.y;
+       },
+       set: function(value) {
+           currentPosition.y = value;
+       }
+    });
+    
     this.orientation = 0;
     this.speed = 1000;
     
-    this.last = {};
-    
-    Object.defineProperty(this, 'parts', {
-       get: function() {
-           var segment = [];
-           segment.push([this.position.x, this.position.y]);
-           segment.push([this.last.position.x, this.last.position.y]);
-           var part = [];
-           part.push(segment);
-           var parts = [];
-           parts.push(part);
-           return parts;
-       } 
-    });
+    this.parts = [
+        [
+            [0, 0], [40, 0]
+        ]
+    ];
     
     this.render = function() {
+        var d = this.speed / 10;
+        // var dx = d * Math.cos((this.direction).toRad());
+        // var dy = d * Math.sin((this.direction).toRad());
+
         ctx.save();
-        ctx.translate(this.position.x, this.position.y);
+        ctx.translate(currentPosition.x, currentPosition.y);
+        ctx.rotate((this.orientation).toRad());
         ctx.beginPath();
-        ctx.arc(0, 0, 3, 0, (360).toRad());
-        ctx.fill();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(5, 0);
+        ctx.stroke();
         ctx.restore();
-        this.last.position = this.last.position || {
-            x: Number(this.position.x),
-            y: Number(this.position.y)
-        }
     };
     
     window.setTimeout(function(instance) {

@@ -53,6 +53,64 @@ asteroids.Collision = function() {
            var caccw = ccw([cx, cy, dx, dy, ax, ay]);
            var cbccw = ccw([cx, cy, dx, dy, bx, by]);
            return acccw != adccw && caccw != cbccw;
+       },
+       detectObjects: function(obj1, obj2) {
+            // Convert into segments
+            var parts1 = obj1.parts;
+            var parts2 = obj2.parts;
+            var convert = function(part) {
+                var segments = [];
+                part.forEach(function(point, index, it) {
+                    if(index == 0) return;
+                    var segment = [];
+                    point.forEach(function(a) {
+                        segment.push(a);
+                    });
+                    it[index-1].forEach(function(a) {
+                        segment.push(a);
+                    });
+                    segments.push(segment);
+                });
+                return segments;
+            };
+            var translate = function(segment, position, orientation) {
+                var rotate = function(point, orientation) {
+                    if(orientation === undefined) {
+                        return point;
+                    }
+                    var rad = orientation.toRad();
+                    var x = point[0];
+                    var y = point[1];
+                    var x1 = Math.cos(rad)*x+Math.sin(rad)*y;
+                    var y1 = Math.sin(rad)*-x+Math.cos(rad)*y;
+                    return [x1, y1];
+                };
+                var a = rotate([segment[0], segment[1]], orientation);               
+                var b = rotate([segment[2], segment[3]], orientation);               
+                return [
+                    a[0]+position.x
+                    , a[1]+position.y
+                    , b[0]+position.x
+                    , b[1]+position.y];
+            };
+            // Check all segments in each part agains all segments of all parts in other object
+            var obj1Segments = obj1.parts.map(convert).reduce(function(a, b) {
+                return a.concat(b);
+            });
+            var obj2Segments = obj2.parts.map(convert).reduce(function(a, b) {
+                return a.concat(b);
+            });
+            var detected = obj1Segments.map(function(s) { 
+                    return translate(s, obj1.position, obj1.orientation);
+                }).some(function(s1) {
+                    return obj2Segments.map(function(s) {
+                        return translate(s, obj2.position, obj2.orientation);
+                    }).some(function(s2) {
+                        var hit = it.detect([s1, s2]);    
+                        return hit;
+                    });
+                });
+            return detected;           
        }
    };
    return it;
