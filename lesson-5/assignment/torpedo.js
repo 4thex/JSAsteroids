@@ -58,13 +58,15 @@ asteroids.Torpedo = function(ctx) {
         ctx.translate(currentPosition.x, currentPosition.y);
         ctx.rotate((this.orientation).toRad());
         ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.lineTo(5, 0);
-        ctx.stroke();
+        // ctx.moveTo(0, 0);
+        // ctx.lineTo(5, 0);
+        // ctx.stroke();
+        ctx.arc(0, 0, 5, 0, (360).toRad());
+        ctx.fill();
         ctx.restore();
     };
     
-    window.setTimeout(function(instance) {
-        instance.expired = true;
-    }.bind(null, this), 2000);
+    window.setTimeout(function() {
+        this.expired = true;
+    }.bind(this), 2000);
 };

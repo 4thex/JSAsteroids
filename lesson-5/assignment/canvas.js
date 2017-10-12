@@ -109,47 +109,7 @@ asteroids.Canvas = function() {
     };
     
     var collision = new asteroids.Collision();
-    // var detectCollision = function(obj1, obj2) {
-    //     // Convert into segments
-    //     var parts1 = obj1.parts;
-    //     var parts2 = obj2.parts;
-    //     var convert = function(part) {
-    //         var segments = [];
-    //         part.forEach(function(point, index, it) {
-    //             if(index == 0) return;
-    //             var segment = [];
-    //             point.forEach(function(a) {
-    //                 segment.push(a);
-    //             });
-    //             it[index-1].forEach(function(a) {
-    //                 segment.push(a);
-    //             });
-    //             segments.push(segment);
-    //         });
-    //         return segments;
-    //     };
-    //     var translate = function(segment, position) {
-    //         return [segment[0]+position.x, segment[1]+position.y, segment[2]+position.x, segment[3]+position.y];
-    //     };
-    //     // Check all segments in each part agains all segments of all parts in other object
-    //     var obj1Segments = obj1.parts.map(convert).reduce(function(a, b) {
-    //         return a.concat(b);
-    //     });
-    //     var obj2Segments = obj2.parts.map(convert).reduce(function(a, b) {
-    //         return a.concat(b);
-    //     });
-    //     var detected = obj1Segments.map(function(s) { 
-    //             return translate(s, obj1.position);
-    //         }).some(function(s1) {
-    //         return obj2Segments.map(function(s) {
-    //             return translate(s, obj2.position);
-    //         }).some(function(s2) {
-    //             return collision.detect([s1, s2]);    
-    //         });
-    //     });
-    //     return detected;
-    // };
-    
+
     var controlShip = function(duration) {
         duration = duration / 1000;
         ship.thrust = keys["ArrowUp"];

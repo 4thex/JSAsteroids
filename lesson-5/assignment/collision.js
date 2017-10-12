@@ -96,10 +96,10 @@ asteroids.Collision = function() {
             // Check all segments in each part agains all segments of all parts in other object
             var obj1Segments = obj1.parts.map(convert).reduce(function(a, b) {
                 return a.concat(b);
-            });
+            }, []);
             var obj2Segments = obj2.parts.map(convert).reduce(function(a, b) {
                 return a.concat(b);
-            });
+            }, []);
             var detected = obj1Segments.map(function(s) { 
                     return translate(s, obj1.position, obj1.orientation);
                 }).some(function(s1) {
