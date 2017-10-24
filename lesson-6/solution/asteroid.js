@@ -7,6 +7,9 @@ asteroids.Asteroid = function(ctx) {
            y: 0
         },
         orientation: 0,
+        direction: 0,
+        speed: 0,
+        rotation: 0, // Degrees per second
         parts: [
             [
                 [0, 100], [75, 100], [100, 0], [75, 25], [50, -100], [0, -100], [-25, -100], [-25, -50], [-100, 0], [0, 100]

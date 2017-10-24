@@ -22,16 +22,40 @@ asteroids.Canvas = function() {
 
     var asteroidsCollection = [];
     
-    var asteroid1 = new asteroids.Asteroid(ctx);
-    asteroid1.position.x = 500;
-    asteroid1.position.y = 500;
+    var createAsteroid = function(ctx) {
+      var asteroid = new asteroids.Asteroid(ctx);
+      // Random direction and distance from center
+      // Get random angle between 0 and 360 degrees
+      var angle = Math.random() * 360;
+      // Get random distance between 500 and 1000
+      var distance = Math.random() * (1000 - 500) + 500;
+      asteroid.position.x = Math.cos(angle.toRad()) * distance;
+      asteroid.position.y = Math.sin(angle.toRad()) * distance;
+      
+      // Random orientation between 0 and 360 degrees
+      var orientation = Math.random() * 360;
+      asteroid.orientation = orientation;
+      
+      // Random speed between 50 and 200
+      var speed = Math.random() * (200 - 50) + 50;
+      asteroid.speed = speed;
+      
+      // Random direction between 0 and 360 degrees
+      var direction = Math.random() * 360;
+      asteroid.direction = direction;
+      
+      // Random rotation speed between -100 and 100 per second
+      var rotation = Math.random() * (100 - -100) + -100;
+      asteroid.rotation = rotation;
+      
+      return asteroid;
+    };
     
-    var asteroid2 = new asteroids.Asteroid(ctx);
-    asteroid2.position.x = -500;
-    asteroid2.position.y = -500;
-    
-    asteroidsCollection.push(asteroid1);
-    asteroidsCollection.push(asteroid2);
+    var i;
+    for(i = 0; i<10; i++) {
+        var asteroid = createAsteroid(ctx);
+        asteroidsCollection.push(asteroid);
+    }
     
     var loop = function() {
         ctx.save();
@@ -73,9 +97,6 @@ asteroids.Canvas = function() {
            }); 
            if(collided) {
                asteroid.collided = true;
-            //   window.setTimeout(function() {
-            //       asteroid.collided = false;
-            //   }, 1000);
            }
         });
         asteroidsCollection = asteroidsCollection.filter(function(asteroid) {
@@ -98,7 +119,30 @@ asteroids.Canvas = function() {
     window.setInterval(animate, 1);
     
     var controlAsteroids = function(duration) {
-        
+        duration = duration / 1000;
+        asteroidsCollection.forEach(function(asteroid) {
+            var d = asteroid.speed * duration;
+            var dx = d * Math.cos((asteroid.direction).toRad());
+            var dy = d * Math.sin((asteroid.direction).toRad());
+            asteroid.position.x += dx;
+            asteroid.position.y += dy;
+            if(asteroid.position.x > canvas.width/2) {
+                asteroid.position.x = -canvas.width/2
+            }
+            if(asteroid.position.x < -canvas.width/2) {
+                asteroid.position.x = canvas.width/2
+            }
+            if(asteroid.position.y > canvas.height/2) {
+                asteroid.position.y = -canvas.height/2
+            }
+            if(asteroid.position.y < -canvas.width/2) {
+                asteroid.position.y = canvas.width/2
+            }
+            
+            var dr = asteroid.rotation * duration;
+            asteroid.orientation += dr;
+            asteroid.orientation %= 360;
+        });
     };
     
     var controlTorpedos = function(duration) {
